@@ -1,78 +1,135 @@
-# 🎓 Examination System & Data Warehouse (End-to-End Project)
-**ITI Graduation Project | Data Analysis Track**
+🎓 Examination System & Modern Data Warehouse
+End-to-End Data Engineering & BI Project | ITI Graduation Project
 
-![Power BI Badge](https://img.shields.io/badge/Power%20BI-Desktop-yellow)
-![Fabric Badge](https://img.shields.io/badge/Microsoft-Fabric-blue)
-![SQL Badge](https://img.shields.io/badge/SQL-Server-red)
-![SSRS Badge](https://img.shields.io/badge/SSRS-Reporting-orange)
+📌 Project Overview
+This project demonstrates a full-cycle data solution for an educational Examination System. It begins with designing a normalized relational database (OLTP) to manage students, exams, and grading. It progresses to operational reporting using SSRS, and concludes with a modern cloud-based data warehouse implementation using Microsoft Fabric and Power BI to analyze student performance and freelance market revenue.
 
-## 📌 Project Overview
-This project represents a full-cycle data engineering and analytics solution for an educational institution. [cite_start]It starts with building a robust **Transactional Database (OLTP)** to manage the examination process (students, exams, questions, grading) and ends with a **Modern Data Warehouse** on **Microsoft Fabric** to analyze student performance and freelance market impact[cite: 26, 718, 727].
 
-[cite_start]The system allows instructors to generate random exams, grade them automatically via Stored Procedures, and enables management to visualize success rates and student career outcomes via Power BI[cite: 27, 28].
 
----
 
-## 🏗️ High-Level Architecture
-The project follows a modern data pipeline flow:
-1.  **OLTP:** SQL Server for transaction handling.
-2.  **Reporting:** SSRS for operational documents (Grades, Certificates).
-3.  **Cloud Storage:** Azure SQL Database & OneLake.
-4.  **ETL:** Microsoft Fabric Dataflow Gen2.
-5.  **Analytics:** Power BI connected to a Star Schema Semantic Model.
+📂 Repository Architecture
+This repository is organized into four main modules representing the data lifecycle:
 
-*(Insert your Architecture Diagram here - from PDF Page 24)*
-![Architecture](./03-Cloud-Data-Warehouse-Fabric/Architecture_Diagram.png)
+Plaintext
 
----
+/ITI-Examination-System
+│
+├── 📁 01-Database-OLTP           # Transactional System Design (SQL Server)
+│   ├── ERD_Diagram.png           # Database entity relationships 
+│   ├── Schema_Mapping.pdf        # Table mapping documentation [cite: 47]
+│   ├── 01_Create_Tables.sql      # DDL scripts for Students, Exams, Questions, etc.
+│   └── 02_Stored_Procedures.sql  # Logic for Exam Generation & Grading [cite: 126]
+│
+├── 📁 02-Reporting-SSRS          # Operational Reporting (Visual Studio)
+│   ├── Student_Grades.rdl        # Report: Student Transcript by ID [cite: 269]
+│   ├── Branch_Tracks.rdl         # Report: Tracks available per Branch [cite: 433]
+│   └── Instructor_Courses.rdl    # Report: Courses taught by Instructor [cite: 499]
+│
+├── 📁 03-Fabric-DataWarehouse    # Cloud ETL & Warehousing (Microsoft Fabric)
+│   ├── Fabric_Architecture.png   # High-level cloud architecture 
+│   ├── Notebooks/                # PySpark code for data ingestion [cite: 1227]
+│   │   └── data_loader.ipynb     # Python script reading CSVs (e.g., Certifications) [cite: 1297]
+│   └── Dataflow_Logic.md         # Documentation of Dataflow Gen2 transformations 
+│
+├── 📁 04-PowerBI-Dashboards      # Analytical Dashboards
+│   ├── Examination_System.pbix   # The complete Power BI file [cite: 1395]
+│   └── assets/                   # Screenshots of dashboard pages
+│
+└── README.md                     # Project Documentation
+🚀 Technical Modules
+1. Database Design & Logic (OLTP)
+The foundation of the system is a normalized SQL Server database used to handle day-to-day transactions.
 
-## 🛠️ Technical Implementation
 
-### Phase 1: SQL Server OLTP & Advanced Logic
-[cite_start]Designed a normalized database (`Examination_System`) to handle complex many-to-many relationships between Students, Courses, and Exams[cite: 2, 99].
-* [cite_start]**Schema:** Modeled entities including `Student`, `Instructor`, `Course`, `Question_Pool`, and `Exam_Qup` (Question mapping)[cite: 63, 70, 73].
-* **Stored Procedures:** Implemented complex business logic using T-SQL:
-    * [cite_start]`sp_CreateExam`: Automates exam generation (Random or Manual selection of questions)[cite: 168, 185].
-    * [cite_start]`sp_StudentSubmitExam`: Handles student answer submission and calculates initial scores[cite: 222].
-    * [cite_start]`sp_OpenNewIntake`: Automates the administrative setup for new academic years[cite: 138].
+ER Diagram: Mapped complex relationships between Students, Intakes, Branches, and Tracks.
 
-### Phase 2: Operational Reporting (SSRS)
-Developed reports using Visual Studio for immediate administrative use:
-* [cite_start]**Student Grades Report:** parameterized by Student ID to show transcripts[cite: 269].
-* [cite_start]**Instructor Course Report:** Analyzes teaching loads and student counts per course[cite: 499].
+Stored Procedures: Implemented advanced business logic using T-SQL to automate the exam lifecycle:
 
-### Phase 3: Microsoft Fabric & ETL
-[cite_start]Migrated data to the cloud using **Microsoft Azure** and **Fabric Dataflow Gen2** to transition from a normalized schema (3NF) to a denormalized schema for analytics[cite: 646, 744, 1083].
-* [cite_start]**Transformation:** Used Power Query in Fabric to clean data and select relevant columns[cite: 912].
-* **Data Modeling (Star Schema):** Created a Data Warehouse with:
-    * [cite_start]**Fact Table:** `FactStudentGrades`[cite: 1134].
-    * [cite_start]**Dimension Tables:** `DimStudent`, `DimBranch`, `DimCourse`, `DimInstructor`, `DimDate`[cite: 917, 919, 1040].
 
-### Phase 4: Power BI Analytics
-Built comprehensive dashboards to track KPIs across Intakes, Branches, and Tracks.
+sp_CreateExam: Generates exams (manual or random question selection).
 
-#### 📊 Dashboard Highlights:
-1.  [cite_start]**Intake & Branch Performance:** Visualizes the Pass/Fail rate (Current Rate: **93.06%**) and student distribution across branches like Cairo and Alexandria[cite: 1608, 1613].
-2.  **Student Freelancing Insights:** A unique module analyzing student income from platforms like *Upwork* and *Freelancer*.
-    * [cite_start]*Insight:* **TopTal** and **Mostaql** generated the highest revenue for students[cite: 2284].
-3.  [cite_start]**Instructor Analysis:** Monitors active instructors and student-to-instructor ratios across departments[cite: 1748, 1871].
 
-*(Insert Power BI Screenshot here)*
-![Dashboard](./04-PowerBI-Dashboards/Dashboard_Intake_Overview.png)
+sp_StudentSubmitExam: Handles student answers and submissions.
 
----
 
-## 📈 Key Insights & Results
-* [cite_start]**High Success Rate:** The system recorded a 93.06% pass rate across 10,082 total success cases[cite: 1470, 1608].
-* [cite_start]**Freelance Impact:** Tracked over **$882k** in student freelance revenue, proving the curriculum's market relevance[cite: 2281].
-* [cite_start]**Scalability:** The move to a Star Schema in Fabric improved query performance for historical data analysis[cite: 1083].
+sp_Grade_Unprocessed_Exams: Automates the grading process.
 
----
 
-## 💻 How to Run
-1.  Execute the scripts in `/01-OLTP-Database-Design` to set up the SQL DB.
-2.  Review the `Fabric` documentation in `/03-Cloud-Data-Warehouse-Fabric` to understand the ETL flow.
-3.  Open the `.pbix` file in Power BI Desktop to interact with the dashboards.
+sp_OpenNewIntake: Streamlines the setup for new academic years.
 
----
-*Created by [Your Name] - ITI Data Analysis Track 2025*
+2. Operational Reporting (SSRS)
+Built utilizing Visual Studio to serve immediate administrative needs.
+
+
+
+Student Grades Report: Retrieves detailed grades and "Pass/Fail" status based on dynamic thresholds (e.g., >90 = Excellent).
+
+
+Department Analysis: Lists students by Department ID.
+
+3. Cloud Modernization (Microsoft Fabric)
+The system was migrated to the cloud to separate analytical workloads from transactional processing.
+
+
+Ingestion: Data uploaded to Azure SQL Database.
+
+
+ETL (Extract, Transform, Load): utilized Dataflow Gen2 in Microsoft Fabric to clean and transform data.
+
+
+Data Lakehouse: Utilized PySpark (Python) notebooks to ingest CSV files (e.g., Student Certifications, Freelance Profiles) into the Lakehouse.
+
+
+
+Modeling: Transformed the normalized schema into a Star Schema (Fact/Dimension) optimized for read-heavy analytics.
+
+
+4. Analytics & Insights (Power BI)
+A suite of interactive dashboards was developed to visualize KPIs.
+
+Key Dashboards:
+
+
+Intake Overview: Tracks student distribution across branches (Cairo, Alexandria, etc.).
+
+
+Performance Analysis: Monitors the global Pass Rate (93.06%) and identifies failure trends by track.
+
+
+Freelance Impact: A unique module tracking student career outcomes, visualizing $882k+ in total freelance revenue across platforms like Upwork and TopTal.
+
+
+
+Instructor Performance: Analyzes instructor activity levels and student pass rates per instructor.
+
+📊 Sample Visuals
+Architecture
+
+Figure 1: The flow from OLTP Database to Microsoft Fabric Data Warehouse.
+
+Power BI Dashboard: Freelancing Analysis
+
+Figure 2: Analysis of student freelance revenue by platform and year.
+
+🛠️ Tools Used
+
+Database: SQL Server, SSMS, Azure SQL Database.
+
+
+
+Cloud & ETL: Microsoft Fabric, Dataflow Gen2, OneLake.
+
+
+
+Coding: T-SQL, Python (PySpark).
+
+
+
+Reporting: SSRS (Visual Studio), Power BI.
+
+
+
+Design: Draw.io (ERD Modeling).
+
+👤 Author
+Mohamed Elbasuoney Power BI Development Track - ITI
