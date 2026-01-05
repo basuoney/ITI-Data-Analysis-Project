@@ -18,7 +18,7 @@ The ITI Examination System enables educational institutions to manage exams, tra
 - Built **12 stored procedures** for complex business logic and exam processing
 - Created **7 SSRS reports** for administrative and academic insights
 - Deployed to **Microsoft Azure** for scalable cloud hosting
-- Engineered **ETL pipelines** in Microsoft Fabric with PySpark
+- Engineered **ETL pipelines** in Microsoft Fabric with Dataflow gen 2 and PySpark
 - Designed **Star Schema data warehouse** for optimized analytics
 - Developed **14 interactive Power BI dashboards** with 50+ KPIs
 
@@ -73,16 +73,8 @@ The ITI Examination System enables educational institutions to manage exams, tra
 ```
 iti-examination-system/
 ├── README.md                          # This file
-├── docs/
-│   ├── PROJECT_OVERVIEW.md           # Detailed project documentation
-│   ├── DATABASE_DESIGN.md            # Database schema explanation
-│   ├── ETL_PIPELINE.md               # Data pipeline documentation
-│   └── DASHBOARD_GUIDE.md            # Power BI dashboard user guide
 ├── database/
 │   ├── schema/
-│   │   ├── 01_create_tables.sql     # Table creation scripts
-│   │   ├── 02_relationships.sql      # Foreign keys & constraints
-│   │   └── 03_indexes.sql           # Performance optimization
 │   ├── stored_procedures/
 │   │   ├── sp_open_intake.sql       # Open new academic intake
 │   │   ├── sp_assign_instructor.sql  # Assign instructors to courses
@@ -98,8 +90,6 @@ iti-examination-system/
 ├── fabric/
 │   ├── notebooks/
 │   │   └── etl_pipeline.ipynb       # PySpark data transformation
-│   └── pipelines/
-│       └── pipeline_config.json      # Data pipeline configuration
 ├── ssrs_reports/
 │   ├── student_grades.rdl           # Student grade report
 │   ├── department_roster.rdl        # Department student list
@@ -190,28 +180,16 @@ From the Power BI dashboards, stakeholders can answer questions like:
 
 1. **Set up the database:**
 ```sql
--- Run scripts in order
-USE master;
-GO
+-- Create database
 CREATE DATABASE ITI_Examination_System;
-GO
-USE ITI_Examination_System;
-GO
 
--- Execute table creation scripts
-:r database/schema/01_create_tables.sql
-:r database/schema/02_relationships.sql
-:r database/schema/03_indexes.sql
-
--- Load sample data
-:r database/sample_data/insert_dummy_data.sql
-
--- Create stored procedures
-:r database/stored_procedures/*.sql
+-- Run scripts in order:
+-- 1. schema/create_tables.sql
+-- 2. sample_data/insert_data.sql
+-- 3. stored_procedures/*.sql
 ```
 
 2. **Deploy to Azure (Optional):**
-- See `docs/AZURE_DEPLOYMENT.md` for step-by-step guide
 
 3. **Configure Fabric Pipeline:**
 - Import `fabric/notebooks/etl_pipeline.ipynb`
@@ -223,12 +201,6 @@ GO
 - Update data source connections
 - Refresh data
 
-## 📚 Documentation
-
-- [Complete Project Documentation](docs/PROJECT_OVERVIEW.md)
-- [Database Design Details](docs/DATABASE_DESIGN.md)
-- [ETL Pipeline Guide](docs/ETL_PIPELINE.md)
-- [Dashboard User Guide](docs/DASHBOARD_GUIDE.md)
 
 ## 🎯 Skills Demonstrated
 
