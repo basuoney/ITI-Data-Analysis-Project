@@ -1,6 +1,6 @@
 # ITI Examination System - End-to-End Data Analytics Solution
 
-![Project Banner](images/banner.png)
+![Project Banner](images/architecture_diagram.jpg)
 
 A comprehensive examination management and analytics system built during my graduation from ITI's Data Analysis & Power BI track. This project demonstrates full-stack data engineering and analytics capabilities, from database design through cloud deployment to interactive dashboards.
 
